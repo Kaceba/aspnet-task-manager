@@ -1,6 +1,7 @@
 using TaskManager.Core.DTOs.Common;
 using TaskManager.Core.DTOs.Tasks;
 using TaskManager.Core.Enums;
+using TaskStatus = TaskManager.Core.Enums.TaskStatus;
 
 namespace TaskManager.Application.Interfaces;
 

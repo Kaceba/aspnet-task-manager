@@ -3,6 +3,7 @@ using TaskManager.Core.Entities;
 using TaskManager.Core.Enums;
 using TaskManager.Core.Interfaces;
 using TaskManager.Infrastructure.Data;
+using TaskStatus = TaskManager.Core.Enums.TaskStatus;
 
 namespace TaskManager.Infrastructure.Repositories;
 

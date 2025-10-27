@@ -5,6 +5,7 @@ using TaskManager.Core.DTOs.Tasks;
 using TaskManager.Core.Entities;
 using TaskManager.Core.Enums;
 using TaskManager.Core.Interfaces;
+using TaskStatus = TaskManager.Core.Enums.TaskStatus;
 
 namespace TaskManager.Application.Services;
 

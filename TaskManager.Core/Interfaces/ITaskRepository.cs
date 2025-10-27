@@ -1,5 +1,6 @@
 using TaskManager.Core.Entities;
 using TaskManager.Core.Enums;
+using TaskStatus = TaskManager.Core.Enums.TaskStatus;
 
 namespace TaskManager.Core.Interfaces;
 
