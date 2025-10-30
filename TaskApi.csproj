@@ -7,17 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.19" />
-    <PackageReference Include="Serilog.AspNetCore" Version="8.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.21" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="TaskManager.Application\TaskManager.Application.csproj" />
-    <ProjectReference Include="TaskManager.Infrastructure\TaskManager.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
