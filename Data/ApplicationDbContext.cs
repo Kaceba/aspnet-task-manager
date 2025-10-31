@@ -12,6 +12,8 @@ namespace TaskApi.Data
         //add dbsets here
         public DbSet<TaskItem> Tasks { get; set;}
 
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
