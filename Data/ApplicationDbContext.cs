@@ -18,6 +18,20 @@ namespace TaskApi.Data
         {
             base.OnModelCreating(modelBuilder);
             //configure entity relationships and constraints here
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<TaskItem>()
+                .HasOne(t => t.User)
+                .WithMany(u => u.Tasks)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade); //deletes task when user is deleted
+
+            modelBuilder.Entity<TaskItem>()
+                .Property(t => t.Status)
+                .HasConversion<string>(); //store enum as string
         }
     }
 }
