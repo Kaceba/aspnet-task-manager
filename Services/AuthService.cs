@@ -51,7 +51,7 @@ namespace TaskApi.Service
                 .FirstOrDefaultAsync(u => u.Email == loginDto.Email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
             {
-                return null; // Invalid credentials, idk about returning null here, maybe a stronger typed system?
+                return null; // Invalid credentials, idk about returning null here, maybe a stronger typed system or Result<T>?
             }
 
             // Generate JWT token
