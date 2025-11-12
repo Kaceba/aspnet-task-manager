@@ -28,7 +28,7 @@ A RESTful API for task management built with ASP.NET Core 8.0, featuring JWT aut
 ## Prerequisites
 
 - Docker and Docker Compose (recommended)
-- OR .NET 8.0 SDK and SQL Server
+- .NET 8.0 SDK and SQL Server
 
 ## Getting Started
 
@@ -83,7 +83,7 @@ Once running, access the Swagger UI at:
 
 Docker configuration uses environment variables from the `.env` file:
 
-- `SQL_SA_PASSWORD` - SQL Server SA password
+- `SQL_SA_PASSWORD` - SQL Server SA password (i wouldn't do this for a real production environments, dotnet secrets exist for a reason)
 - `JWT_SECRET_KEY` - Secret key for JWT token generation
 - `JWT_ISSUER` - Token issuer
 - `JWT_AUDIENCE` - Token audience
@@ -163,3 +163,4 @@ Application logs are written to:
 ## License
 
 This project is for educational purposes.
+
