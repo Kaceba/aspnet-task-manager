@@ -11,6 +11,7 @@ A RESTful API for task management built with ASP.NET Core 8.0, featuring JWT aut
 - Structured logging with Serilog
 - Docker containerization
 - Swagger API documentation
+- Comprehensive unit tests (22 tests)
 
 ## Technologies
 
@@ -22,6 +23,7 @@ A RESTful API for task management built with ASP.NET Core 8.0, featuring JWT aut
 - BCrypt password hashing
 - Serilog logging
 - Docker & Docker Compose
+- xUnit, Moq, FluentAssertions (Testing)
 
 ## Prerequisites
 
@@ -106,6 +108,41 @@ For manual setup, configure `appsettings.json`:
 - In production, use proper secrets management (Azure Key Vault, AWS Secrets Manager, etc.)
 - Rotate secrets regularly
 
+## Running Tests
+
+The project includes comprehensive unit tests for services and controllers.
+
+### Run all tests:
+
+```bash
+dotnet test
+```
+
+### Run tests with detailed output:
+
+```bash
+dotnet test --verbosity normal
+```
+
+### Test Coverage
+
+The test suite includes:
+- **AuthService Tests** (8 tests)
+  - User registration with validation
+  - User login with credential verification
+  - JWT token generation and claims
+  - Password hashing and verification
+  - Duplicate email handling
+
+- **TasksController Tests** (14 tests)
+  - CRUD operations for tasks
+  - User isolation (users can only access their own tasks)
+  - Authorization checks
+  - Task status management
+  - Input validation
+
+Total: 22 passing tests
+
 ## Project Structure
 
 - `Controllers/` - API endpoints
@@ -115,6 +152,7 @@ For manual setup, configure `appsettings.json`:
 - `Services/` - Business logic
 - `Middleware/` - Custom middleware (error handling)
 - `Migrations/` - EF Core migrations
+- `TaskApi.Tests/` - Unit and integration tests
 
 ## Logging
 
