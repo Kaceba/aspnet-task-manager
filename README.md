@@ -159,8 +159,3 @@ Total: 22 passing tests
 Application logs are written to:
 - Console output
 - `logs/log-[date].txt` files
-
-## License
-
-This project is for educational purposes.
-
