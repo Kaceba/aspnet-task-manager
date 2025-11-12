@@ -1,0 +1,14 @@
+﻿bin/
+obj/
+logs/
+
+.vs/
+.vscode/
+.idea/
+
+.git/
+.gitignore
+
+*.md
+Dockerfile
+.dockerignore
