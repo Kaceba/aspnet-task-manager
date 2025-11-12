@@ -2,6 +2,8 @@
 
 A RESTful API for task management built with ASP.NET Core 8.0, featuring JWT authentication and SQL Server database.
 
+<img width="2124" height="1165" alt="image" src="https://github.com/user-attachments/assets/b2e80f30-46e5-43d2-94b8-3d4d2ff20cee" />
+
 ## Features
 
 - User authentication with JWT tokens
@@ -159,3 +161,4 @@ Total: 22 passing tests
 Application logs are written to:
 - Console output
 - `logs/log-[date].txt` files
+
