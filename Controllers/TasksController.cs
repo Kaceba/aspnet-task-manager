@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
-using TaskApi.Data;
 using TaskApi.DTOs;
-using TaskApi.Models;
+using TaskApi.Service;
 
 namespace TaskApi.Controllers
 {
@@ -13,106 +11,53 @@ namespace TaskApi.Controllers
     [Authorize]
     public class TasksController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        public TasksController(ApplicationDbContext context)
+        private readonly ITaskService _taskService;
+
+        public TasksController(ITaskService taskService)
         {
-            _context = context;
+            _taskService = taskService;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<TaskResponseDto>>> GetAllTasks()
         {
-            var userid = GetCurrentUserId();
-
-            var tasks = await _context.Tasks
-                .Where(t => t.UserId == userid)
-                .Select(t => new TaskResponseDto
-                {
-                    Id = t.Id,
-                    Title = t.Title,
-                    Description = t.Description,
-                    Status = t.Status.ToString(),
-                    DueDate = t.DueDate,
-                    CreatedAt = t.CreatedAt
-                })
-                .ToListAsync();
-
+            var userId = GetCurrentUserId();
+            var tasks = await _taskService.GetAllTasksAsync(userId);
             return Ok(tasks);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskResponseDto>> GetTaskById(int id)
         {
-            var userid = GetCurrentUserId();
-            var task = await _context.Tasks
-                .Where(t => t.UserId == userid && t.Id == id)
-                .Select(t => new TaskResponseDto
-                {
-                    Id = t.Id,
-                    Title = t.Title,
-                    Description = t.Description,
-                    Status = t.Status.ToString(),
-                    DueDate = t.DueDate,
-                    CreatedAt = t.CreatedAt
-                })
-                .FirstOrDefaultAsync();
+            var userId = GetCurrentUserId();
+            var task = await _taskService.GetTaskByIdAsync(userId, id);
 
             if (task is null)
             {
                 return NotFound();
             }
+
             return Ok(task);
         }
 
         [HttpPost]
         public async Task<ActionResult<TaskResponseDto>> CreateTask(CreateTaskDto taskDto)
         {
-            var userid = GetCurrentUserId();
-            var task = new TaskItem
-            {
-                Title = taskDto.Title,
-                Description = taskDto.Description,
-                Status = Enum.Parse<Models.TaskStatus>(taskDto.Status), 
-                DueDate = taskDto.DueDate,
-                CreatedAt = DateTime.UtcNow,
-                UserId = userid
-            };
-            _context.Tasks.Add(task);
-
-            await _context.SaveChangesAsync();
-
-            var responseDto = new TaskResponseDto
-            {
-                Id = task.Id,
-                Title = task.Title,
-                Description = task.Description,
-                Status = task.Status.ToString(),
-                DueDate = task.DueDate,
-                CreatedAt = task.CreatedAt
-            };
-
-            return CreatedAtAction(nameof(GetTaskById), new { id = task.Id }, responseDto);
+            var userId = GetCurrentUserId();
+            var task = await _taskService.CreateTaskAsync(userId, taskDto);
+            return CreatedAtAction(nameof(GetTaskById), new { id = task.Id }, task);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTask(int id, [FromBody] UpdateTaskDto taskDto)
         {
-            var userid = GetCurrentUserId();
+            var userId = GetCurrentUserId();
+            var success = await _taskService.UpdateTaskAsync(userId, id, taskDto);
 
-            var task = await _context.Tasks
-                .FirstOrDefaultAsync(t => t.UserId == userid && t.Id == id);
-
-            if (task is null)
+            if (!success)
             {
                 return NotFound();
             }
-
-            task.Title = taskDto.Title;
-            task.Description = taskDto.Description;
-            task.Status = Enum.Parse<Models.TaskStatus>(taskDto.Status);
-            task.DueDate = taskDto.DueDate;
-
-            await _context.SaveChangesAsync();
 
             return NoContent();
         }
@@ -120,19 +65,14 @@ namespace TaskApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(int id)
         {
-            var userid = GetCurrentUserId();
+            var userId = GetCurrentUserId();
+            var success = await _taskService.DeleteTaskAsync(userId, id);
 
-            var task = await _context.Tasks
-                .FirstOrDefaultAsync(t => t.UserId == userid && t.Id == id);
-
-            if (task is null)
+            if (!success)
             {
                 return NotFound();
             }
 
-            _context.Tasks.Remove(task);
-
-            await _context.SaveChangesAsync();
             return NoContent();
         }
 

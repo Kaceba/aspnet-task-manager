@@ -30,6 +30,7 @@ try
     builder.Services.AddControllers();
     builder.Services.AddHealthChecks();
     builder.Services.AddScoped<AuthService>();
+    builder.Services.AddScoped<ITaskService, TaskService>();
 
     builder.Host.UseSerilog();
 
